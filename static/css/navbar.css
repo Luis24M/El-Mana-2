@@ -1,0 +1,66 @@
+*{
+  font-family: 'Mulish';
+}
+
+.navbar {
+    position: sticky;
+    width: 132px;
+    height: 852px;
+    background: #0c0b0b;
+    border-radius: 24px;
+    border: 0.5px solid;
+    /* se mueva junto con la barra de d */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 4% 0px 0px 2%;
+    /* sombra muy discreta */
+    box-shadow: 1px 0px 100px 0px rgba(0,0,0,0.75);
+  }
+  
+  .M{
+    color: #7DAC75;
+    font-size: 64px;
+    font-family: Baloo Bhai, cursive;
+    font-weight: 400;
+    word-wrap: break-word;
+    text-align: center;
+    margin: 20px 0;
+    font-style: oblique;
+  }
+  .navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 50px 20px;
+    display: block;
+    text-align: center;   
+  }
+  
+  .navbar a:hover {
+    background-color: #7DAC75;
+    border-radius: 1px;
+    /* que se desborde un poco */
+    margin: -5px;
+    /* los iconos sean color negro*/
+    
+  }
+
+  .navbar a:hover i{
+    color: #0c0b0b;
+  }
+
+#home{
+  font-size: 50px;
+}
+
+#Menu{
+  font-size: 50px;
+}
+
+#carta{
+  font-size: 50px;
+}
+
+#mapa{
+  font-size: 50px;
+}

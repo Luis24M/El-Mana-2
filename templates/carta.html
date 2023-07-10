@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/carta.css">
+
+<div id="borde" class="titulo">EL MANÁ: CARTA</div>
+<div id="carta-container"></div>
+
+<div id="promocion-container">
+  <input type="text" id="codigo-input" placeholder="Ingresa un código de promoción">
+  <button id="aplicar-btn">Aplicar</button>
+</div>
+
+<div id="comprar-container">
+  <button id="comprar-btn">Realizar Compra</button>
+</div>
+
+<script>
+  // Código JavaScript para obtener la carta y aplicar promociones
+
+  fetch("/cart")
+    .then(response => response.json())
+    .then(data => {
+      const cartaContainer = document.getElementById("carta-container");
+
+      const platosEnCarta = data.platos_en_carta;
+      const subtotal = data.subtotal;
+
+      platosEnCarta.forEach(plato => {
+        const nombre = plato.nombre;
+        const imagenCodificada = plato.imagen;
+        const cantidad = plato.cantidad;
+        const precio = plato.precio;
+
+        // Decodifica la imagen codificada en base64
+        const imagenDecodificada = atob(imagenCodificada);
+
+        // Crea un elemento <img> y asigna la imagen decodificada
+        const imgElement = document.createElement("img");
+        imgElement.className = "imagen";
+        imgElement.src = "data:image/jpeg;base64," + btoa(imagenDecodificada);
+
+        // Crea un elemento <h2> para mostrar el nombre del plato
+        const nombreElement = document.createElement("h2");
+        nombreElement.className = "nombre";
+        nombreElement.textContent = nombre;
+
+        // Crea un elemento <p> para mostrar la cantidad y el precio del plato
+        const cantidadPrecioElement = document.createElement("p");
+        cantidadPrecioElement.className = "cantidad-precio";
+        cantidadPrecioElement.textContent = "Cantidad: " + cantidad + " - Precio: S/." + precio;
+
+        // Crea un contenedor para el plato
+        const platoElement = document.createElement("div");
+        platoElement.className = "plato";
+
+        // Crea un contenedor para la imagen y los detalles del plato
+        const contenedorElement = document.createElement("div");
+        contenedorElement.className = "contenedor";
+
+        // Agrega los elementos al contenedor del plato
+        contenedorElement.appendChild(imgElement);
+        contenedorElement.appendChild(cantidadPrecioElement);
+        platoElement.appendChild(contenedorElement);
+        platoElement.appendChild(nombreElement);
+        cartaContainer.appendChild(platoElement);
+      });
+
+      // Muestra el subtotal de la carta
+      const subtotalElement = document.createElement("h3");
+      subtotalElement.className = "subtotal";
+      subtotalElement.textContent = "Subtotal: S/." + subtotal.toFixed(2);
+      cartaContainer.appendChild(subtotalElement);
+    })
+    .catch(error => {
+      console.error("Error al obtener la carta:", error);
+    });
+
+  const codigoInput = document.getElementById("codigo-input");
+  const aplicarBtn = document.getElementById("aplicar-btn");
+  const comprarBtn = document.getElementById("comprar-btn");
+
+  aplicarBtn.addEventListener("click", () => {
+    const codigoPromocion = codigoInput.value.trim();
+
+    // Realiza la lógica para aplicar el código de promoción aquí
+    // Puedes realizar una solicitud al servidor para validar el código y aplicar descuentos u otras acciones necesarias
+    // Puedes utilizar fetch() para enviar una solicitud POST al servidor y manejar la respuesta
+
+    // Ejemplo básico para mostrar un mensaje en la consola
+    console.log("Código de promoción aplicado:", codigoPromocion);
+
+    // Limpia el campo de entrada del código
+    codigoInput.value = "";
+  });
+
+  comprarBtn.addEventListener("click", () => {
+    // Realiza la lógica para realizar la compra de la carta aquí
+    // Puedes realizar una solicitud al servidor para procesar la compra y realizar acciones necesarias
+
+    // Ejemplo básico para mostrar un mensaje en la consola
+    console.log("Compra realizada");
+
+    // Redirige al usuario a la página de pago u otra página necesaria
+    window.location.href = "/pago";
+  });
+</script>
+{% endblock %}

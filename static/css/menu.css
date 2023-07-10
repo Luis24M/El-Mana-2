@@ -1,0 +1,102 @@
+.button a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    top: 90%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    text-transform: uppercase;
+    background: black;
+    color: white;
+    text-decoration: none;
+    padding: 25px 60px;
+    letter-spacing: 0.1em;
+    transition: 0.2s;
+  }
+  
+  a:hover {
+    background: var(--clr);
+    letter-spacing: 0.25em;
+  }
+  
+  #platos-container {
+    margin-top: 2%;
+    margin-left: 15%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .plato {
+    width: fit-content;
+    margin: 20px;
+    position: relative;
+  }
+  
+  .contenedor {
+    position: relative;
+  }
+  
+  .imagen {
+    width: 400px;
+    height: 275px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .descripcion {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* color: #fff; */
+    color: black;
+    border-radius: 5px;
+    display: none;
+    width: 80%; /* Ajusta el ancho de la descripción al 100% */
+    text-align: center; /* Centra el texto dentro de la descripción */
+  }
+  
+  .plato:hover .imagen {
+    opacity: 0.2; 
+  }
+  
+  .plato:hover .descripcion {
+    display: block;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .agregar {
+    position: absolute;
+    bottom: 20px; /* Coloca el botón debajo del texto de la descripción */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #7dac75;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .agregar:hover {
+    background-color: #609c5a;
+  }
+  
+  /* estilo a los alert */
+  .alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    margin-bottom: 15px;
+  }

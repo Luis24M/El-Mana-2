@@ -1,0 +1,9 @@
+.titulo{
+    display: table;
+    border-bottom: 4px solid #7DAC75;
+    text-align: center;
+    margin-left: 15%;
+    margin-top: -860px;
+    font-size: 50px;
+    font-weight: bold;
+}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/menu.css">
+
+<div id="borde" class="titulo">EL MANÁ: PLATOS</div>
+<div id="platos-container"></div>
+
+<script>
+  fetch("/platos")
+    .then(response => response.json())
+    .then(data => {
+      const platosContainer = document.getElementById("platos-container");
+
+      data.forEach(plato => {
+        const nombre = plato.nombre;
+        const descripcion = plato.descripcion;
+        const imagenCodificada = plato.imagen;
+        const precio = plato.precio;
+
+
+        // Decodifica la imagen codificada en base64
+        const imagenDecodificada = atob(imagenCodificada);
+
+        // Crea un elemento <img> y asigna la imagen decodificada
+        const imgElement = document.createElement("img");
+        imgElement.className = "imagen";
+        imgElement.src = "data:image/jpeg;base64," + btoa(imagenDecodificada);
+
+        // Crea elementos <h2> y <p> para mostrar el nombre y la descripción
+        const nombreElement = document.createElement("h2");
+        nombreElement.className = "nombre";
+        nombreElement.textContent = nombre;
+
+        const descripcionElement = document.createElement("p");
+        descripcionElement.className = "descripcion";
+        descripcionElement.textContent = descripcion;
+
+        // Crea un contenedor para el plato
+        const platoElement = document.createElement("div");
+        platoElement.className = "plato";
+
+        // Crea un contenedor para la imagen y el botón
+        const contenedorElement = document.createElement("div");
+        contenedorElement.className = "contenedor";
+
+        // Crea un botón para agregar a la carta
+        const botonElement = document.createElement("button");
+        // muestra agregar a la carta junto con el precio
+        botonElement.textContent = "Agregar a la carta: S/." + precio;
+        botonElement.className = "agregar";
+        botonElement.addEventListener("click", () => {
+          agregarPlatoACarta(nombre);
+        });
+
+        
+        // Agrega los elementos al contenedor de platos
+        contenedorElement.appendChild(imgElement);
+        contenedorElement.appendChild(descripcionElement);
+        contenedorElement.appendChild(botonElement);
+        platoElement.appendChild(contenedorElement);
+        platoElement.appendChild(nombreElement);
+        platosContainer.appendChild(platoElement);
+
+        // Muestra y oculta el botón al pasar el mouse sobre el plato
+        platoElement.addEventListener("mouseover", () => {
+          botonElement.style.display = "block";
+        });
+
+        platoElement.addEventListener("mouseout", () => {
+          botonElement.style.display = "none";
+        });
+      });
+    })
+    .catch(error => {
+      console.error("Error al obtener los platos:", error);
+    });
+
+    function agregarPlatoACarta(nombrePlato) { // Función para agregar un plato a la carta
+        alert("Plato agregado a la carta");
+        console.log("Agregando plato a la carta:", nombrePlato);
+        fetch("/cart", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `nombre=${nombrePlato}&cantidad=1`
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Mensaje de éxito o error del servidor
+        })
+        .catch(error => {
+            alert("Error al agregar el plato a la carta");
+            console.error("Error al agregar el plato a la carta:", error);
+        });
+        }
+
+</script>
+<!-- <div class="button"><a href="#" style="--clr:#7DAC75"><span>Load More</span></a></div> -->
+{% endblock %}

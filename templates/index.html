@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL MANÁ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo_mana.png') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido al Restaurante El Maná</h1>
+        <p>Sueña con sabores, despierta en El Maná</p>
+        <div class="button-container">
+            <a href="{{ url_for('about') }}" class="about-button">About</a>
+            <a href="{{ url_for('menu') }}" class="menu-button">Menu</a>
+        </div>
+    </div>
+</body>
+</html>
