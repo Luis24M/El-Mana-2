@@ -1,8 +1,103 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>El Mana - Nuestra Historia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ms+Madi&family=Mulish&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/about.css">
+</head>
+<body>
+    <a href="/">
+        <img class="logo" src="/static/images/logo_mana.png" alt="Logo El Mana">
+    </a>
+    <section class="content">
+        <h4 class="nombre">El Mana</h4>
+        <h1 class="titulo">Nuestra Historia</h1>
+        <p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="imagenes">
+            <img src="/static/images/about 1.png" alt="">
+            <img src="/static/images/about 2.png" alt="">
+        </div>
+    </section>
 
+    <section class="comentarios">
+        <h2>Comentarios</h2>
+        <div id="comentarios-lista"></div>
+        <form id="formulario-comentario">
+            <h3>Agregar un comentario</h3>
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div>
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" required></textarea>
+            </div>
+            <button type="submit">Enviar comentario</button>
+        </form>
+    </section>
 
-<img src="/static/images/logo_mana.png" alt="Logo el mana">
+    <!-- Scripts JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Función para cargar los comentarios existentes
+            function cargarComentarios() {
+                $.ajax({
+                    url: '/comentarios',
+                    type: 'GET',
+                    success: function(response) {
+                        var comentariosLista = $('#comentarios-lista');
+                        comentariosLista.empty();
 
-<h4>El Mana</h4>
+                        $.each(response, function(index, comentario) {
+                            var comentarioHTML = '<div class="comentario">' +
+                                                    '<strong>' + comentario.nombre + '</strong>' +
+                                                    '<span class="fecha">' + comentario.fecha + '</span>' +
+                                                    '<p>' + comentario.mensaje + '</p>' +
+                                                '</div>';
+
+                            comentariosLista.append(comentarioHTML);
+                        });
+                    }
+                });
+            }
+
+            cargarComentarios();
+
+            // Función para enviar un comentario
+            $('#formulario-comentario').on('submit', function(event) {
+                event.preventDefault();
+
+                var nombreInput = $('#nombre');
+                var mensajeInput = $('#mensaje');
+
+                var nombre = nombreInput.val();
+                var mensaje = mensajeInput.val();
+
+                // Validación básica de los campos
+                if (nombre && mensaje) {
+                    $.ajax({
+                        url: '/comentarios',
+                        type: 'POST',
+                        data: {
+                            nombre: nombre,
+                            mensaje: mensaje
+                        },
+                        success: function(response) {
+                            cargarComentarios();
+
+                            // Limpiar campos del formulario
+                            nombreInput.val('');
+                            mensajeInput.val('');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

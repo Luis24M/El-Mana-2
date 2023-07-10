@@ -1,8 +1,9 @@
-import io
 from flask import Flask, jsonify, request, send_file, send_from_directory, render_template
-import base64
 from pymongo import MongoClient
+from datetime import datetime
+import base64
 import ssl
+import io
 
 app = Flask(__name__)
 
@@ -13,6 +14,7 @@ ssl_context.verify_mode = ssl.CERT_NONE
 mongo = MongoClient('mongodb+srv://Luis:Lomaximoluis02@cluster0.f6yp4mn.mongodb.net/?retryWrites=true&w=majority&tlsAllowInvalidCertificates=true')
 db = mongo["ElMana"]
 db_platos = db["platos"]
+db_comentarios = db["comentarios"]
 
 # Variable global para almacenar los platos seleccionados
 cart_items = []
@@ -111,6 +113,45 @@ def get_cart():
 
     return jsonify({"platos_en_carta": platos_en_carta, "subtotal": subtotal})
 
+
+@app.route("/comentarios", methods=["POST"])
+def create_comentario():
+    # Obtener los datos del comentario desde la solicitud
+    nombre = request.form.get("nombre")
+    mensaje = request.form.get("mensaje")
+
+    # Crear el objeto de comentario
+    comentario = {
+        "nombre": nombre,
+        "mensaje": mensaje,
+        "fecha": datetime.now()
+    }
+
+    # Guardar el comentario en la base de datos
+    db_comentarios.insert_one(comentario)
+
+    return "Comentario creado exitosamente"
+
+@app.route("/comentarios", methods=["GET"])
+def get_comentarios():
+    comentarios = db_comentarios.find().sort("fecha", -1)
+
+    comentarios_list = []
+
+    for comentario in comentarios:
+        nombre = comentario["nombre"]
+        mensaje = comentario["mensaje"]
+        fecha = comentario["fecha"].strftime("%Y-%m-%d %H:%M:%S")
+
+        comentario_dict = {
+            "nombre": nombre,
+            "mensaje": mensaje,
+            "fecha": fecha
+        }
+
+        comentarios_list.append(comentario_dict)
+
+    return jsonify(comentarios_list)
 
 @app.route("/")
 def index():

@@ -21,12 +21,12 @@
   .M{
     color: #7DAC75;
     font-size: 64px;
-    font-family: Baloo Bhai, cursive;
+    font-family: Baloo Bhai, sans-serif;
     font-weight: 400;
     word-wrap: break-word;
     text-align: center;
     margin: 20px 0;
-    font-style: oblique;
+    /* font-style: oblique; */
   }
   .navbar a {
     color: #ffffff;

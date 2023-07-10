@@ -1,3 +1,114 @@
-h4{
-    font-family: 'Ms Mandi';
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Mulish';
+    justify-content: center;
+    text-align: center;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.content {
+    margin-top: 50px;
+    margin: 150px 100px;
+}
+
+.nombre {
+    font-family: 'Ms Madi', sans-serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.titulo {
+    font-size: 4em;
+    margin-top: 15px;
+}
+
+.descripcion {
+    font-size: 1.8em;
+    margin-top: 20px;
+}
+
+.imagenes {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.imagenes img {
+    margin: 10px 20px;
+    max-width: 400px;
+    height: auto;
+}
+.comentarios {
+    width: 80%;
+    margin-top: 50px;
+    text-align: left;
+}
+
+.comentario {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.comentario strong {
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+}
+
+.comentario .fecha {
+    color: #777;
+    font-size: 14px;
+}
+
+.comentario p {
+    margin-top: 10px;
+    color: #555;
+    font-size: 16px;
+}
+#formulario-comentario {
+    margin-top: 30px;
+    text-align: left;
+}
+
+#formulario-comentario h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#formulario-comentario label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#formulario-comentario input,
+#formulario-comentario textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+#formulario-comentario button {
+    padding: 10px 20px;
+    background-color: #7DAC75;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#formulario-comentario button:hover {
+    background-color: #7DAC75;
 }
