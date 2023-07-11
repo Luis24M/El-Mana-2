@@ -20,6 +20,7 @@
   fetch("/cart")
     .then(response => response.json())
     .then(data => {
+      
       const cartaContainer = document.getElementById("carta-container");
 
       const platosEnCarta = data.platos_en_carta;
@@ -70,38 +71,44 @@
       subtotalElement.className = "subtotal";
       subtotalElement.textContent = "Subtotal: S/." + subtotal.toFixed(2);
       cartaContainer.appendChild(subtotalElement);
+      
+      const codigoInput = document.getElementById("codigo-input");
+      const aplicarBtn = document.getElementById("aplicar-btn");
+      const comprarBtn = document.getElementById("comprar-btn");
+    
+      cartaContainer.appendChild(codigoInput);
+      cartaContainer.appendChild(aplicarBtn);
+      cartaContainer.appendChild(comprarBtn);
+    
+      aplicarBtn.addEventListener("click", () => {
+        const codigoPromocion = codigoInput.value.trim();
+    
+        // Realiza la lógica para aplicar el código de promoción aquí
+        // Puedes realizar una solicitud al servidor para validar el código y aplicar descuentos u otras acciones necesarias
+        // Puedes utilizar fetch() para enviar una solicitud POST al servidor y manejar la respuesta
+    
+        // Ejemplo básico para mostrar un mensaje en la consola
+        console.log("Código de promoción aplicado:", codigoPromocion);
+    
+        // Limpia el campo de entrada del código
+        codigoInput.value = "";
+      });
+    
+      comprarBtn.addEventListener("click", () => {
+        // Realiza la lógica para realizar la compra de la carta aquí
+        // Puedes realizar una solicitud al servidor para procesar la compra y realizar acciones necesarias
+    
+        // Ejemplo básico para mostrar un mensaje en la consola
+        console.log("Compra realizada");
+    
+        // Redirige al usuario a la página de pago u otra página necesaria
+        window.location.href = "/pago";
+      });
+
     })
     .catch(error => {
       console.error("Error al obtener la carta:", error);
     });
 
-  const codigoInput = document.getElementById("codigo-input");
-  const aplicarBtn = document.getElementById("aplicar-btn");
-  const comprarBtn = document.getElementById("comprar-btn");
-
-  aplicarBtn.addEventListener("click", () => {
-    const codigoPromocion = codigoInput.value.trim();
-
-    // Realiza la lógica para aplicar el código de promoción aquí
-    // Puedes realizar una solicitud al servidor para validar el código y aplicar descuentos u otras acciones necesarias
-    // Puedes utilizar fetch() para enviar una solicitud POST al servidor y manejar la respuesta
-
-    // Ejemplo básico para mostrar un mensaje en la consola
-    console.log("Código de promoción aplicado:", codigoPromocion);
-
-    // Limpia el campo de entrada del código
-    codigoInput.value = "";
-  });
-
-  comprarBtn.addEventListener("click", () => {
-    // Realiza la lógica para realizar la compra de la carta aquí
-    // Puedes realizar una solicitud al servidor para procesar la compra y realizar acciones necesarias
-
-    // Ejemplo básico para mostrar un mensaje en la consola
-    console.log("Compra realizada");
-
-    // Redirige al usuario a la página de pago u otra página necesaria
-    window.location.href = "/pago";
-  });
 </script>
 {% endblock %}

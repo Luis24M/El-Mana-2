@@ -1,0 +1,19 @@
+
+
+.map-container iframe{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    border: 2px;
+    border-color: black;
+}
+.map-container{
+    margin-left: 15%;
+    margin-top: 30px;
+}
+.subtitle{
+    margin-left: 15%;
+    font-size: 30px;
+}

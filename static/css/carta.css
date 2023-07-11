@@ -59,4 +59,13 @@
   #aplicar-btn:hover {
     background-color: #629864;
   }
+
+  #comprar-btn{
+    padding: 5px 10px;
+    background-color: #7DAC75;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
   
