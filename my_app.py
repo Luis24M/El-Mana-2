@@ -174,5 +174,9 @@ def carta():
 def mapa():
     return render_template("mapa.html")
 
+@app.route("/pago")
+def pago():
+    return render_template("pago.html")
+
 if __name__ == "__main__":
     app.run(debug=True, port=7000)

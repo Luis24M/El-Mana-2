@@ -1,32 +1,64 @@
-{% extends "base.html" %}
-{% block content %}
-<link rel="stylesheet" href="/static/css/carta.css">
+{% extends "base.html" %} {% block content %}
+<link rel="stylesheet" href="/static/css/carta.css" />
 
 <div id="borde" class="titulo">EL MANÁ: CARTA</div>
-<div id="carta-container"></div>
+<div id="carta-container">
+  <div id="platos"></div>
+  
+  <div id="promocion-container">
+    <input
+      type="text"
+      id="codigo-input"
+      placeholder="Ingresa un código de promoción"
+    />
+    <button id="aplicar-btn">Aplicar</button>
+  </div>
 
-<div id="promocion-container">
-  <input type="text" id="codigo-input" placeholder="Ingresa un código de promoción">
-  <button id="aplicar-btn">Aplicar</button>
+  <div id="comprar-container">
+    <button id="comprar-btn">Realizar Compra</button>
+  </div>
+
+  <div id="formulario-flotante">
+    <form id="pago-form">
+      <h2>Formulario de Pago</h2>
+
+      <label for="nombre-tarjeta">Nombre en la tarjeta:</label>
+      <input type="text" id="nombre-tarjeta" name="nombre-tarjeta" required>
+
+      <label for="numero-tarjeta">Número de tarjeta:</label>
+      <input type="text" id="numero-tarjeta" name="numero-tarjeta" required>
+
+      <label for="fecha-expiracion">Fecha de expiración:</label>
+      <input type="text" id="fecha-expiracion" name="fecha-expiracion" required>
+
+      <label for="codigo-seguridad">Código de seguridad:</label>
+      <input type="text" id="codigo-seguridad" name="codigo-seguridad" required>
+
+      <label for="metodo-pago">Método de pago:</label>
+      <select id="metodo-pago" name="metodo-pago" required>
+        <option value="">Seleccionar método de pago</option>
+        <option value="tarjeta">Tarjeta de crédito/débito</option>
+        <option value="billetera">Billetera digital</option>
+        <option value="paypal">PayPal</option>
+      </select>
+
+      <input type="submit" value="Realizar Pago">
+    </form>
+
 </div>
-
-<div id="comprar-container">
-  <button id="comprar-btn">Realizar Compra</button>
-</div>
-
 <script>
   // Código JavaScript para obtener la carta y aplicar promociones
 
   fetch("/cart")
-    .then(response => response.json())
-    .then(data => {
-      
+    .then((response) => response.json())
+    .then((data) => {
+      const platos = document.getElementById("platos");
       const cartaContainer = document.getElementById("carta-container");
 
       const platosEnCarta = data.platos_en_carta;
       const subtotal = data.subtotal;
 
-      platosEnCarta.forEach(plato => {
+      platosEnCarta.forEach((plato) => {
         const nombre = plato.nombre;
         const imagenCodificada = plato.imagen;
         const cantidad = plato.cantidad;
@@ -48,7 +80,8 @@
         // Crea un elemento <p> para mostrar la cantidad y el precio del plato
         const cantidadPrecioElement = document.createElement("p");
         cantidadPrecioElement.className = "cantidad-precio";
-        cantidadPrecioElement.textContent = "Cantidad: " + cantidad + " - Precio: S/." + precio;
+        cantidadPrecioElement.textContent =
+          "Cantidad: " + cantidad + " - Precio: S/." + precio;
 
         // Crea un contenedor para el plato
         const platoElement = document.createElement("div");
@@ -57,58 +90,93 @@
         // Crea un contenedor para la imagen y los detalles del plato
         const contenedorElement = document.createElement("div");
         contenedorElement.className = "contenedor";
+        
+        // Creamos la x para eliminar el plato de la carta
+        const xElement = document.createElement("i");
+        xElement.className = "x";
+        xElement.textContent = "x";
+        xElement.addEventListener("click", (e) => {
+          e.target.parentElement.remove();
+        });
 
         // Agrega los elementos al contenedor del plato
+        contenedorElement.appendChild(xElement);
         contenedorElement.appendChild(imgElement);
         contenedorElement.appendChild(cantidadPrecioElement);
         platoElement.appendChild(contenedorElement);
         platoElement.appendChild(nombreElement);
-        cartaContainer.appendChild(platoElement);
+        platos.appendChild(platoElement);
+        cartaContainer.appendChild(platos);
       });
 
       // Muestra el subtotal de la carta
-      const subtotalElement = document.createElement("h3");
-      subtotalElement.className = "subtotal";
-      subtotalElement.textContent = "Subtotal: S/." + subtotal.toFixed(2);
-      cartaContainer.appendChild(subtotalElement);
       
       const codigoInput = document.getElementById("codigo-input");
       const aplicarBtn = document.getElementById("aplicar-btn");
       const comprarBtn = document.getElementById("comprar-btn");
-    
-      cartaContainer.appendChild(codigoInput);
-      cartaContainer.appendChild(aplicarBtn);
-      cartaContainer.appendChild(comprarBtn);
-    
+      
+      const subtotalElement = document.createElement("h3");
+      subtotalElement.className = "subtotal";
+      subtotalElement.textContent = "Subtotal: S/." + subtotal.toFixed(2);
+      
+      const pago = document.createElement("div");
+      pago.className = "pago";
+      const promociónContainer = document.createElement("div");
+      promociónContainer.className = "promocion-container";
+      const compraContainer = document.createElement("div");
+      compraContainer.className = "compra-container";
+      compraContainer.appendChild(subtotalElement);
+      promociónContainer.appendChild(codigoInput);
+      promociónContainer.appendChild(aplicarBtn);
+      compraContainer.appendChild(comprarBtn);
+      pago.appendChild(promociónContainer);
+      pago.appendChild(compraContainer);
+      cartaContainer.appendChild(pago);
+
       aplicarBtn.addEventListener("click", () => {
         const codigoPromocion = codigoInput.value.trim();
-    
+
         // Realiza la lógica para aplicar el código de promoción aquí
         // Puedes realizar una solicitud al servidor para validar el código y aplicar descuentos u otras acciones necesarias
         // Puedes utilizar fetch() para enviar una solicitud POST al servidor y manejar la respuesta
-    
+
         // Ejemplo básico para mostrar un mensaje en la consola
         console.log("Código de promoción aplicado:", codigoPromocion);
-    
+
         // Limpia el campo de entrada del código
         codigoInput.value = "";
       });
-    
+
       comprarBtn.addEventListener("click", () => {
         // Realiza la lógica para realizar la compra de la carta aquí
         // Puedes realizar una solicitud al servidor para procesar la compra y realizar acciones necesarias
-    
+
         // Ejemplo básico para mostrar un mensaje en la consola
         console.log("Compra realizada");
-    
-        // Redirige al usuario a la página de pago u otra página necesaria
-        window.location.href = "/pago";
-      });
 
+      });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error al obtener la carta:", error);
     });
 
+    // Ocultar el formulario flotante inicialmente
+  const formularioFlotante = document.getElementById("formulario-flotante");
+  formularioFlotante.style.display = "none";
+
+  // Mostrar el formulario flotante al hacer clic en "Realizar Compra"
+  const comprarBtn = document.getElementById("comprar-btn");
+  comprarBtn.addEventListener("click", () => {
+    formularioFlotante.style.display = "block";
+  });
+
+  // Manejar el envío del formulario de pago
+  const pagoForm = document.getElementById("pago-form");
+  pagoForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    // Lógica para procesar el pago y redirigir a la página de confirmación
+    // ...
+    window.location.href = "/confirmacion";
+  });
 </script>
 {% endblock %}

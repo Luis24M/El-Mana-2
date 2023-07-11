@@ -1,0 +1,62 @@
+/* Estilos generales del formulario */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos específicos del formulario de pago */
+  #nombre-tarjeta {
+    text-transform: uppercase;
+  }
+  
+  #numero-tarjeta {
+    font-family: "Courier New", Courier, monospace;
+  }
+  
+  #fecha-expiracion,
+  #codigo-seguridad {
+    width: 50%;
+  }
+  
+  #metodo-pago {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  

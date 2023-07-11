@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/pago.css" />
+
+<!-- Formulario para realizar pagos -->
+<form action="/procesar-pago" method="post">
+  <h2>Formulario de Pago</h2>
+  
+  <label for="nombre-tarjeta">Nombre en la tarjeta:</label>
+  <input type="text" id="nombre-tarjeta" name="nombre-tarjeta" required>
+  
+  <label for="numero-tarjeta">Número de tarjeta:</label>
+  <input type="text" id="numero-tarjeta" name="numero-tarjeta" required>
+  
+  <label for="fecha-expiracion">Fecha de expiración:</label>
+  <input type="text" id="fecha-expiracion" name="fecha-expiracion" required>
+  
+  <label for="codigo-seguridad">Código de seguridad:</label>
+  <input type="text" id="codigo-seguridad" name="codigo-seguridad" required>
+  
+  <label for="metodo-pago">Método de pago:</label>
+  <select id="metodo-pago" name="metodo-pago" required>
+    <option value="">Seleccionar método de pago</option>
+    <option value="tarjeta">Tarjeta de crédito/débito</option>
+    <option value="billetera">Billetera digital</option>
+    <option value="paypal">PayPal</option>
+  </select>
+  
+  <input type="submit" value="Realizar Pago">
+</form>
+{% endblock %}
